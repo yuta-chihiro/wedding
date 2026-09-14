@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>RSVP | YUTA & CHIHIRO</title>
+
+  <style>
+
+    :root {
+      --bg: #f4f2ed;
+      --text: #181818;
+      --sub: #666;
+      --line: #d7d4cc;
+      --white: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      letter-spacing: 0.03em;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+
+      padding: 28px 5vw;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      z-index: 10;
+
+      font-size: 12px;
+      letter-spacing: 0.18em;
+    }
+
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    main {
+      width: min(900px, 90%);
+      margin: 0 auto;
+      padding-top: 110px;
+    }
+
+
+    /* =========================
+       TITLE
+    ========================= */
+
+    .title-area {
+      padding: 20px 0 70px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.25em;
+      margin-bottom: 38px;
+    }
+
+    h1 {
+      margin: 0;
+
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(64px, 10vw, 120px);
+      font-weight: normal;
+      line-height: 0.88;
+      letter-spacing: -0.05em;
+    }
+
+    .date {
+      margin-top: 50px;
+
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 18px;
+      letter-spacing: 0.12em;
+    }
+
+    .intro {
+      margin-top: 45px;
+
+      color: var(--sub);
+      font-size: 14px;
+      line-height: 2;
+    }
+
+
+    /* =========================
+       FORM
+    ========================= */
+
+    .form-area {
+      border-top: 1px solid var(--line);
+
+      padding-top: 65px;
+      padding-bottom: 100px;
+    }
+
+    .field {
+      margin-bottom: 50px;
+    }
+
+    .field-label {
+      display: block;
+
+      margin-bottom: 18px;
+
+      font-size: 12px;
+      letter-spacing: 0.18em;
+    }
+
+    input[type="text"],
+    textarea {
+
+      width: 100%;
+
+      padding: 15px 0;
+
+      background: transparent;
+
+      border: none;
+      border-bottom: 1px solid var(--line);
+
+      color: var(--text);
+
+      font-family: inherit;
+      font-size: 16px;
+
+      outline: none;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+      border-bottom-color: var(--text);
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+
+    /* =========================
+       RADIO
+    ========================= */
+
+    .radio-area {
+      display: flex;
+      gap: 35px;
+    }
+
+    .radio-label {
+
+      display: flex;
+      align-items: center;
+
+      gap: 10px;
+
+      cursor: pointer;
+
+      font-size: 15px;
+    }
+
+    .radio-label input {
+
+      appearance: none;
+
+      width: 18px;
+      height: 18px;
+
+      margin: 0;
+
+      border: 1px solid var(--text);
+      border-radius: 50%;
+
+      position: relative;
+
+      cursor: pointer;
+    }
+
+    .radio-label input:checked::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 8px;
+      height: 8px;
+
+      top: 4px;
+      left: 4px;
+
+      background: var(--text);
+
+      border-radius: 50%;
+    }
+
+
+    /* =========================
+       BUTTON
+    ========================= */
+
+    .submit-area {
+      margin-top: 70px;
+    }
+
+    .submit-button {
+
+      width: 100%;
+
+      padding: 22px 30px;
+
+      background: var(--text);
+      color: var(--white);
+
+      border: 1px solid var(--text);
+
+      font-family: inherit;
+      font-size: 13px;
+
+      letter-spacing: 0.18em;
+
+      cursor: pointer;
+
+      transition:
+        background 0.3s ease,
+        color 0.3s ease;
+    }
+
+    .submit-button:hover {
+
+      background: transparent;
+      color: var(--text);
+    }
+
+    .submit-button:disabled {
+
+      opacity: 0.5;
+      cursor: wait;
+    }
+
+
+    /* =========================
+       THANK YOU
+    ========================= */
+
+    #thank-you {
+
+      display: none;
+
+      min-height: 500px;
+
+      padding: 100px 0;
+
+      text-align: center;
+    }
+
+    #thank-you h2 {
+
+      margin: 0;
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: clamp(60px, 9vw, 110px);
+
+      font-weight: normal;
+
+      letter-spacing: -0.05em;
+    }
+
+    #thank-you p {
+
+      margin-top: 30px;
+
+      color: var(--sub);
+
+      font-size: 14px;
+    }
+
+
+    /* =========================
+       BACK
+    ========================= */
+
+    .back-area {
+
+      padding: 35px 0 80px;
+
+      border-top: 1px solid var(--line);
+
+      text-align: center;
+    }
+
+    .back-link {
+
+      font-size: 12px;
+
+      letter-spacing: 0.15em;
+
+      transition: opacity 0.3s ease;
+    }
+
+    .back-link:hover {
+      opacity: 0.5;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+
+      padding: 35px 5vw;
+
+      border-top: 1px solid var(--line);
+
+      display: flex;
+
+      justify-content: space-between;
+
+      font-size: 11px;
+
+      letter-spacing: 0.15em;
+    }
+
+
+    /* =========================
+       ANIMATION
+    ========================= */
+
+    .fade-up {
+
+      opacity: 0;
+
+      transform: translateY(25px);
+
+      animation: fadeUp 0.9s ease forwards;
+    }
+
+    .delay-1 {
+      animation-delay: 0.15s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.3s;
+    }
+
+    .delay-3 {
+      animation-delay: 0.45s;
+    }
+
+    @keyframes fadeUp {
+
+      to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+      }
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+      header {
+        padding: 22px 6vw;
+      }
+
+      main {
+        width: 88%;
+        padding-top: 90px;
+      }
+
+      .title-area {
+        padding-bottom: 55px;
+      }
+
+      h1 {
+        font-size: clamp(58px, 17vw, 90px);
+      }
+
+      .date {
+        margin-top: 35px;
+      }
+
+      .intro {
+        margin-top: 35px;
+        font-size: 13px;
+      }
+
+      .form-area {
+        padding-top: 45px;
+        padding-bottom: 70px;
+      }
+
+      .field {
+        margin-bottom: 40px;
+      }
+
+      .radio-area {
+        gap: 25px;
+      }
+
+      #thank-you {
+        min-height: 400px;
+        padding: 80px 0;
+      }
+
+      #thank-you h2 {
+        font-size: 65px;
+      }
+
+      footer {
+        padding: 30px 6vw;
+      }
+    }
+
+
+    /* =========================
+       REDUCED MOTION
+    ========================= */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .fade-up {
+
+        opacity: 1;
+
+        transform: none;
+
+        animation: none;
+      }
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       HEADER
+  ========================= -->
+
+  <header>
+
+    <div>
+      YUTA & CHIHIRO
+    </div>
+
+    <div>
+      RSVP
+    </div>
+
+  </header>
+
+
+
+  <!-- =========================
+       MAIN
+  ========================= -->
+
+  <main>
+
+
+    <!-- =========================
+         TITLE
+    ========================= -->
+
+    <section class="title-area">
+
+      <div class="eyebrow fade-up">
+        WEDDING RSVP
+      </div>
+
+
+      <h1 class="fade-up delay-1">
+
+        Will you<br>
+        join us?
+
+      </h1>
+
+
+      <div class="date fade-up delay-2">
+
+        11.14.2026
+
+      </div>
+
+
+      <div class="intro fade-up delay-3">
+
+        私たちの結婚式へのご出欠について、<br>
+        下記フォームよりご回答をお願いいたします。
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         FORM
+    ========================= -->
+
+    <section id="form-section">
+
+
+      <form
+        id="rsvp-form"
+        class="form-area fade-up delay-2"
+        method="POST"
+      >
+
+
+        <!-- お名前 -->
+
+        <div class="field">
+
+          <label
+            class="field-label"
+            for="name"
+          >
+            お名前 *
+          </label>
+
+
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="お名前をご入力ください"
+            required
+          >
+
+        </div>
+
+
+
+        <!-- ご出欠 -->
+
+        <div class="field">
+
+          <span class="field-label">
+            ご出欠 *
+          </span>
+
+
+          <div class="radio-area">
+
+
+            <label class="radio-label">
+
+              <input
+                type="radio"
+                name="attendance"
+                value="出席"
+                required
+              >
+
+              <span>
+                出席
+              </span>
+
+            </label>
+
+
+
+            <label class="radio-label">
+
+              <input
+                type="radio"
+                name="attendance"
+                value="欠席"
+              >
+
+              <span>
+                欠席
+              </span>
+
+            </label>
+
+
+          </div>
+
+        </div>
+
+
+
+        <!-- 同伴者 -->
+
+        <div class="field">
+
+          <label
+            class="field-label"
+            for="guest"
+          >
+            同伴者
+          </label>
+
+
+          <input
+            type="text"
+            id="guest"
+            name="guest"
+            placeholder="お名前、または「なし」"
+          >
+
+        </div>
+
+
+
+        <!-- アレルギー -->
+
+        <div class="field">
+
+          <label
+            class="field-label"
+            for="allergy"
+          >
+            アレルギー
+          </label>
+
+
+          <input
+            type="text"
+            id="allergy"
+            name="allergy"
+            placeholder="アレルギーの有無をご入力ください"
+          >
+
+        </div>
+
+
+
+        <!-- MESSAGE -->
+
+        <div class="field">
+
+          <label
+            class="field-label"
+            for="message"
+          >
+            MESSAGE
+          </label>
+
+
+          <textarea
+            id="message"
+            name="message"
+            placeholder="メッセージがあればぜひ！"
+          ></textarea>
+
+        </div>
+
+
+
+        <!-- SEND BUTTON -->
+
+        <div class="submit-area">
+
+          <button
+            type="submit"
+            class="submit-button"
+            id="submit-button"
+          >
+            SEND RSVP
+          </button>
+
+        </div>
+
+
+      </form>
+
+    </section>
+
+
+
+    <!-- =========================
+         THANK YOU
+    ========================= -->
+
+    <section id="thank-you">
+
+      <h2>
+        Thank you.
+      </h2>
+
+
+      <p>
+        ご回答ありがとうございました。
+      </p>
+
+    </section>
+
+
+
+    <!-- =========================
+         BACK
+    ========================= -->
+
+    <div class="back-area">
+
+      <a
+        href="index.html"
+        class="back-link"
+      >
+        ← BACK TO WEDDING
+      </a>
+
+    </div>
+
+
+  </main>
+
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    <div>
+      YUTA & CHIHIRO
+    </div>
+
+    <div>
+      2026.11.14
+    </div>
+
+  </footer>
+
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
+  <script>
+
+
+    /*
+      Apps ScriptのURL
+    */
+
+    const SCRIPT_URL =
+      "https://script.google.com/macros/s/AKfycbz5wSQgJPJzeMFxGzqY6B2oEf_Q1A2nEFll_g1zwvYBnxbLtAx0huWBBVhqVMVu-WWYYg/exec";
+
+
+    /*
+      HTMLの要素を取得
+    */
+
+    const form =
+      document.getElementById("rsvp-form");
+
+    const formSection =
+      document.getElementById("form-section");
+
+    const thankYou =
+      document.getElementById("thank-you");
+
+    const submitButton =
+      document.getElementById("submit-button");
+
+
+    /*
+      フォーム送信
+    */
+
+    form.addEventListener("submit", async function(event) {
+
+      /*
+        Googleフォームへの通常送信を止める
+      */
+
+      event.preventDefault();
+
+
+      /*
+        ボタンを送信中にする
+      */
+
+      submitButton.disabled = true;
+
+      submitButton.textContent = "SENDING...";
+
+
+      /*
+        入力されたデータを取得
+      */
+
+      const formData =
+        new FormData(form);
+
+
+      try {
+
+        /*
+          Apps Scriptへ送信
+        */
+
+        await fetch(
+          SCRIPT_URL,
+          {
+            method: "POST",
+            body: formData,
+            mode: "no-cors"
+          }
+        );
+
+
+        /*
+          少し待ってThank youを表示
+        */
+
+        setTimeout(function() {
+
+          formSection.style.display = "none";
+
+          thankYou.style.display = "block";
+
+
+          window.scrollTo({
+
+            top: thankYou.offsetTop - 80,
+
+            behavior: "smooth"
+
+          });
+
+        }, 800);
+
+
+      } catch (error) {
+
+        /*
+          エラーが出た場合
+        */
+
+        console.error(error);
+
+
+        submitButton.disabled = false;
+
+        submitButton.textContent = "SEND RSVP";
+
+
+        alert(
+          "送信できませんでした。もう一度お試しください。"
+        );
+
+      }
+
+    });
+
+
+  </script>
+
+
+</body>
+
+</html>
